@@ -1,0 +1,154 @@
+.wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 420px at 88% -8%, #dff3e8 0%, transparent 60%),
+    radial-gradient(700px 380px at -10% 8%, #e8eef8 0%, transparent 55%),
+    radial-gradient(600px 400px at 50% 100%, #e7f5ee 0%, transparent 55%),
+    var(--bg);
+}
+
+.veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(243, 246, 244, 0.92) 0%,
+    rgba(243, 246, 244, 0.55) 42%,
+    rgba(243, 246, 244, 0.35) 68%,
+    rgba(243, 246, 244, 0.75) 100%
+  );
+}
+
+.scene {
+  position: absolute;
+  right: -6%;
+  top: 12%;
+  width: min(540px, 78vw);
+  height: 300px;
+  perspective: 1000px;
+  perspective-origin: 42% 38%;
+  opacity: 0.55;
+}
+
+.sceneSecondary {
+  left: -14%;
+  right: auto;
+  top: auto;
+  bottom: 6%;
+  width: min(380px, 62vw);
+  height: 220px;
+  opacity: 0.28;
+  transform: scale(0.82);
+}
+
+.rig {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: rigDrift 26s ease-in-out infinite;
+}
+
+.sceneSecondary .rig {
+  animation-duration: 34s;
+  animation-direction: reverse;
+}
+
+.chips {
+  position: absolute;
+  inset: 0;
+}
+
+.chip {
+  position: absolute;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: rgba(15, 122, 76, 0.55);
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(15, 122, 76, 0.12);
+  box-shadow: 0 12px 28px rgba(23, 40, 32, 0.06);
+  transform-style: preserve-3d;
+  animation: chipFloat 18s ease-in-out infinite;
+  backdrop-filter: blur(4px);
+}
+
+.chip:nth-child(1) {
+  left: 8%;
+  top: 22%;
+  animation-delay: 0s;
+}
+
+.chip:nth-child(2) {
+  left: 18%;
+  top: 58%;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  animation-delay: -6s;
+}
+
+.chip:nth-child(3) {
+  right: 22%;
+  top: 72%;
+  animation-delay: -11s;
+}
+
+.chip:nth-child(4) {
+  right: 12%;
+  top: 38%;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  animation-delay: -14s;
+}
+
+@keyframes rigDrift {
+  0%,
+  100% {
+    transform: rotateX(56deg) rotateY(22deg) rotateZ(-6deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotateX(60deg) rotateY(32deg) rotateZ(-2deg) translate3d(0, -14px, 24px);
+  }
+}
+
+@keyframes chipFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotateX(52deg) rotateY(-18deg);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(0, -22px, 40px) rotateX(48deg) rotateY(8deg);
+    opacity: 0.65;
+  }
+}
+
+@media (max-width: 760px) {
+  .scene {
+    right: -28%;
+    top: 8%;
+    opacity: 0.38;
+  }
+
+  .sceneSecondary {
+    display: none;
+  }
+
+  .chip:nth-child(3),
+  .chip:nth-child(4) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rig,
+  .chip {
+    animation: none !important;
+  }
+}

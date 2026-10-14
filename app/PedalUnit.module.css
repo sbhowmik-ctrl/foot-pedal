@@ -1,0 +1,172 @@
+.unit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 360px;
+  height: 150px;
+  margin: -75px 0 0 -180px;
+  transform-style: preserve-3d;
+}
+
+.base {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #ffffff 0%, #e8f0eb 55%, #d4e4db 100%);
+  border: 1px solid rgba(15, 122, 76, 0.14);
+  box-shadow:
+    0 28px 60px rgba(15, 122, 76, 0.12),
+    0 2px 0 rgba(255, 255, 255, 0.9) inset;
+  transform: translateZ(0);
+}
+
+.base::after {
+  content: "";
+  position: absolute;
+  inset: 10px 14px 18px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.65), transparent);
+}
+
+.pedals {
+  position: absolute;
+  inset: 18px 12px 22px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  transform-style: preserve-3d;
+}
+
+.pedal {
+  position: relative;
+  transform-style: preserve-3d;
+  transform-origin: 50% 100%;
+}
+
+.pad {
+  position: relative;
+  height: 88px;
+  border-radius: 14px;
+  background: linear-gradient(165deg, #ffffff 0%, #f0f6f2 45%, #d9e8df 100%);
+  border: 1px solid rgba(15, 122, 76, 0.18);
+  box-shadow:
+    0 14px 22px rgba(23, 40, 32, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.95) inset;
+  transform-style: preserve-3d;
+  animation: pedalPress 5.5s ease-in-out infinite;
+}
+
+.pedal:nth-child(1) .pad {
+  animation-delay: 0s;
+}
+
+.pedal:nth-child(2) .pad {
+  animation-delay: 1.8s;
+}
+
+.pedal:nth-child(3) .pad {
+  animation-delay: 3.4s;
+}
+
+.pad::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent 55%);
+  transform: translateZ(2px);
+}
+
+.label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) translateZ(8px);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.labeled .label {
+  top: 36%;
+}
+
+.pedal:nth-child(2) .label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sublabel {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%) translateZ(8px);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.stem {
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 46%;
+  height: 12px;
+  margin-left: -23%;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(180deg, #c5d8cc, #9eb5a8);
+  transform: translateZ(-6px) rotateX(78deg);
+  transform-origin: 50% 0;
+}
+
+.cable {
+  position: absolute;
+  left: 50%;
+  top: -36px;
+  width: 10px;
+  height: 48px;
+  margin-left: -5px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #8eab9a, #b7cfc2, #8eab9a);
+  transform: translateZ(14px) rotateX(12deg);
+  box-shadow: 0 6px 14px rgba(23, 40, 32, 0.1);
+}
+
+.cable::after {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin-left: -11px;
+  border-radius: 50%;
+  border: 3px solid #8eab9a;
+  background: radial-gradient(circle at 35% 35%, #ffffff, #d9e8df);
+}
+
+@keyframes pedalPress {
+  0%,
+  72%,
+  100% {
+    transform: rotateX(0deg) translateZ(0);
+  }
+
+  78% {
+    transform: rotateX(16deg) translateZ(-5px);
+  }
+
+  86% {
+    transform: rotateX(3deg) translateZ(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pad {
+    animation: none !important;
+  }
+}

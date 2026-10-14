@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using Microsoft.Win32.SafeHandles;
 
 namespace PedalKeys
@@ -69,7 +68,7 @@ namespace PedalKeys
         static extern int CM_Get_Device_Interface_List_Size(out int len, ref Guid guid, string deviceId, uint flags);
 
         [DllImport("cfgmgr32.dll", CharSet = CharSet.Unicode)]
-        static extern int CM_Get_Device_Interface_List(ref Guid guid, string deviceId, StringBuilder buffer, int len, uint flags);
+        static extern int CM_Get_Device_Interface_List(ref Guid guid, string deviceId, char[] buffer, int len, uint flags);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         static extern SafeFileHandle CreateFile(string name, uint access, uint share, IntPtr security,
@@ -106,11 +105,12 @@ namespace PedalKeys
             int len;
             if (CM_Get_Device_Interface_List_Size(out len, ref guid, null, 0) != CR_SUCCESS || len <= 1)
                 yield break;
-            StringBuilder sb = new StringBuilder(len);
-            if (CM_Get_Device_Interface_List(ref guid, null, sb, len, 0) != CR_SUCCESS)
+            // A multi-string: path\0path\0\0. A StringBuilder stops at the first null, which
+            // hid every device after the first one (the pedal included).
+            char[] buffer = new char[len];
+            if (CM_Get_Device_Interface_List(ref guid, null, buffer, len, 0) != CR_SUCCESS)
                 yield break;
-            // Result is a multi-string: path\0path\0\0
-            foreach (string p in sb.ToString().Split('\0'))
+            foreach (string p in new string(buffer).Split('\0'))
                 if (p.Length > 0) yield return p;
         }
 

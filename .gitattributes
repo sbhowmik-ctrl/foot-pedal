@@ -1,0 +1,6 @@
+# Shell scripts must keep LF line endings or macOS can't run them.
+*.sh text eol=lf
+*.command text eol=lf
+*.swift text eol=lf
+# Windows batch files need CRLF.
+*.bat text eol=crlf
